@@ -11,7 +11,8 @@ app.on('ready', () => {
   template = [
     { label: 'Not casting', enabled: false },
     { label: 'Stop casting', visible: false, id: 'stop', click: stop_casting },
-    { type: 'separator' }
+    { type: 'separator' },
+    { label: 'Refresh list', click: refresh_devices }
   ];
 
   // Add available devices
@@ -38,7 +39,7 @@ app.on('ready', () => {
   // Add refresh option
   template = template.concat([
     { type: 'separator' },
-    { label: 'Refresh list', click: refresh_devices }
+    { label: 'Quit', role: 'quit' }
   ]);
 
   tray.setToolTip('Cast audio');
@@ -88,7 +89,7 @@ let refresh_devices = () => {
   if (available_devices.length > 0) {
     for (let i = available_devices.length - 1; i >= 0; i--) {
       let device = available_devices[i];
-      template.splice(3, 0, {
+      template.splice(4, 0, {
         label: device,
         id: device,
         type: 'radio',
@@ -98,7 +99,7 @@ let refresh_devices = () => {
     }
 
   } else {
-    template.splice(3, 0, {
+    template.splice(4, 0, {
       label: 'No devices available',
       enabled: false,
       isTemp: true
