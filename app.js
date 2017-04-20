@@ -5,7 +5,7 @@ const caster = require('./cast');
 let tray, template;
 
 app.on('ready', () => {
-  tray = new Tray('./icons/ready_iconTemplate.png');
+  tray = new Tray(path.join(__dirname, 'icons/ready_iconTemplate.png'));
 
   // Create menu
   template = [
@@ -56,7 +56,7 @@ let choose_device = (item) => {
   item.checked = true;
   template[1].visible = true;
 
-  tray.setImage('./icons/casting_iconTemplate.png');
+  tray.setImage(path.join(__dirname, 'icons/casting_iconTemplate.png'));
   tray.setContextMenu(Menu.buildFromTemplate(template));
 }
 
@@ -74,7 +74,7 @@ let stop_casting = () => {
   // Hide stop option
   template[1].visible = false;
 
-  tray.setImage('./icons/ready_iconTemplate.png');
+  tray.setImage(path.join(__dirname, 'icons/ready_iconTemplate.png'));
   tray.setContextMenu(Menu.buildFromTemplate(template));
 }
 
