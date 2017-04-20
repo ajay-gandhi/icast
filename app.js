@@ -6,7 +6,7 @@ let tray,
     template;
 
 app.on('ready', () => {
-  tray = new Tray('./icons/ic_cast_black_24dp/web/ic_cast_black_24dp_2x.png');
+  tray = new Tray('./icons/ready_iconTemplate.png');
 
   // Create menu
   template = [
@@ -49,7 +49,7 @@ app.on('ready', () => {
  * Called when a device is clicked in the menu
  */
 let choose_device = (item) => {
-  console.log(item);
+  caster.start(item.id);
 }
 
 /**
