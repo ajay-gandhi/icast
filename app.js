@@ -81,7 +81,7 @@ let stop_casting = () => {
  * Refreshes the list of devices
  */
 let refresh_devices = () => {
-  template = template.filter(item => item.isTemp);
+  template = template.filter(item => !item.isTemp);
 
   // Add available devices
   available_devices = caster.list();
