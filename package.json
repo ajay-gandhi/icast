@@ -1,0 +1,24 @@
+{
+  "name": "iCast",
+  "version": "0.0.1",
+  "description": "Cast your Mac using Chromecast",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/ajay-gandhi/icast",
+  "keywords": [
+    "chromecast",
+    "audio",
+    "stream",
+    "mac"
+  ],
+  "author": "Ajay Gandhi",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  },
+  "dependencies": {
+    "chromecast-osx-audio": "^1.0.1"
+  }
+}
