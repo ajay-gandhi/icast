@@ -1,5 +1,6 @@
 
 const { app, Menu, Tray } = require('electron');
+const path   = require('path');
 const caster = require('./cast');
 
 let tray, template;
