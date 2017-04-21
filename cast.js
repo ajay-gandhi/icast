@@ -7,7 +7,7 @@ const exec  = require('child_process').execSync,
       path  = require('path');
 
 const AD_CMD = path.join(__dirname, 'audiodevice');
-const CC_CMD = path.join(__dirname, 'node_modules/chromecast-osx-audio/bin/chromecast.js');
+const CC_PATH = path.join(__dirname, 'node_modules/chromecast-osx-audio/bin/chromecast.js');
 
 let cc_process,
     original_output,
@@ -18,7 +18,8 @@ let cc_process,
 /**
  * Returns a list of available streaming devices
  */
-module.exports.list = () => exec(CC_CMD + ' -l').toString().trim().split('\n').slice(1);
+module.exports.list = () =>
+  exec('/usr/local/bin/node ' + CC_PATH + ' -l').toString().trim().split('\n').slice(1);
 
 /**
  * Begins streaming on the given device
@@ -38,7 +39,7 @@ module.exports.start = (which) => {
   exec('osascript -e "set volume output volume 100 --100%"');
 
   // Enable chromecast streaming
-  cc_process = spawn(CC_CMD, ['-d', which]);
+  cc_process = spawn('/usr/local/bin/node', [CC_PATH, '-d', which]);
 }
 
 /**

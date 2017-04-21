@@ -9,12 +9,13 @@ Chromecast devices. Just run the app, and choose an option from the menu bar.
 
 * Stop casting if deselect option
 * Implement switching
+* Fix absolute path node bug
 
 ## Install
 
 Before installing iCast, you need to install
-[Soundflower](https://github.com/mattingalls/Soundflower) and you need
-[Node](https://nodejs.org).
+[Soundflower](https://github.com/mattingalls/Soundflower). You must also have
+[Node](https://nodejs.org) and symlink it to `/usr/local/bin/node` (weird bug).
 
 Then, download a [release](https://github.com/ajay-gandhi/icast/releases), copy
 to your applications folder, and run.
