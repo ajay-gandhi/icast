@@ -62,6 +62,7 @@ let choose_device = (item) => {
 
   // Check item and show stop option
   item.checked = true;
+  menu.items[0].label = 'Casting';
   menu.items[1].visible = true;
 
   tray.setImage(path.join(__dirname, 'icons/casting_iconTemplate.png'));
@@ -80,6 +81,7 @@ let stop_casting = () => {
   });
 
   // Hide stop option
+  menu.items[0].label = 'Not casting';
   menu.items[1].visible = false;
 
   tray.setImage(path.join(__dirname, 'icons/ready_iconTemplate.png'));
