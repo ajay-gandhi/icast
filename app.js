@@ -19,7 +19,7 @@ app.on('ready', () => {
   // Add available devices
   available_devices = caster.list();
   if (available_devices.length > 0) {
-    template.concat(available_devices.map(device => {
+    template = template.concat(available_devices.map(device => {
       return {
         label: device,
         id: device,
@@ -43,8 +43,6 @@ app.on('ready', () => {
     { label: 'Quit', role: 'quit' }
   ]);
 
-  setTimeout(refresh_devices, 500);
-
   menu = Menu.buildFromTemplate(template);
 
   tray.setToolTip('Cast audio');
@@ -54,7 +52,7 @@ app.on('ready', () => {
 /**
  * Stop casting if quitting
  */
-app.on('before-quit', caster.stop);
+app.on('before-quit', () => { caster.stop() });
 
 /**
  * Called when a device is clicked in the menu

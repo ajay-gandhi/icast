@@ -13,7 +13,8 @@ Chromecast devices. Just run the app, and choose an option from the menu bar.
 ## Install
 
 Before installing iCast, you need to install
-[Soundflower](https://github.com/mattingalls/Soundflower).
+[Soundflower](https://github.com/mattingalls/Soundflower) and you need
+[Node](https://nodejs.org).
 
 Then, download a [release](https://github.com/ajay-gandhi/icast/releases), copy
 to your applications folder, and run.
