@@ -11,6 +11,8 @@ const CC_CMD = path.join(__dirname, 'node_modules/chromecast-osx-audio/bin/chrom
 
 let cc_process,
     original_output,
+    original_input,
+    original_volume,
     casting = false;
 
 /**
@@ -25,14 +27,18 @@ module.exports.start = (which) => {
   if (casting) return;
   casting = true;
 
-  // Save original audio output
-  original_output = exec(AD_CMD + ' output').toString();
+  // Save originals
+  original_output = exec(AD_CMD + ' output').toString().trim();
+  original_input  = exec(AD_CMD + ' input').toString().trim();
+  original_volume = exec('osascript -e "output volume of (get volume settings)"').toString().trim();
 
-  // Set new audio output
+  // Set new properties
   exec(AD_CMD + ' output "Soundflower (2ch)"');
+  exec(AD_CMD + ' input "Soundflower (2ch)"');
+  exec('osascript -e "set volume output volume 100 --100%"');
 
   // Enable chromecast streaming
-  cc_process = spawn(CC_CMD + ' -d ' + which);
+  cc_process = spawn(CC_CMD, ['-d', which]);
 }
 
 /**
@@ -42,12 +48,18 @@ module.exports.stop = () => {
   if (!casting) return;
   casting = false;
 
-  // Reset audio output
-  output = exec(AD_CMD + ' output ' + original_output).toString().trim();
-  if (output === 'device not found!') {
+  // Reset audio properties
+  let result = exec(AD_CMD + ' output "' + original_output + '"').toString().trim();
+  if (result === 'device not found!') {
     // Original device not available anymore, attempt to reset
     exec(AD_CMD + ' output "Internal Speakers"');
   }
+  result = exec(AD_CMD + ' input "' + original_input + '"').toString().trim();
+  if (result === 'device not found!') {
+    // Original device not available anymore, attempt to reset
+    exec(AD_CMD + ' input "Internal Speakers"');
+  }
+  exec('osascript -e "set volume output volume ' + original_volume + ' --100%"');
 
   // Kill chromecast streaming process
   cc_process.kill();
