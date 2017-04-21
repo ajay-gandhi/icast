@@ -5,6 +5,7 @@ const caster = require('./cast');
 
 let tray, menu;
 
+app.dock.hide();
 app.on('ready', () => {
   tray = new Tray(path.join(__dirname, 'icons/ready_iconTemplate.png'));
 
