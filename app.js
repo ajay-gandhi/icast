@@ -54,11 +54,20 @@ app.on('ready', () => {
  */
 app.on('before-quit', () => { caster.stop() });
 
+/******************************* Cast Functions *******************************/
+
+let casting_device = false;
+
 /**
  * Called when a device is clicked in the menu
  */
 let choose_device = (item) => {
+  if (casting_device) {
+    if (item.id === casting_device) return;
+    caster.stop();
+  }
   caster.start(item.id);
+  casting_device = item.id;
 
   // Check item and show stop option
   item.checked = true;
@@ -73,7 +82,9 @@ let choose_device = (item) => {
  * Stops casting
  */
 let stop_casting = () => {
-  caster.stop();
+  if (!caster.stop()) return;
+
+  casting_device = false;
 
   // Uncheck all
   menu.items.forEach(item => {
