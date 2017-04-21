@@ -5,6 +5,11 @@
 This little menu bar app allows you to cast audio from your Mac to any available
 Chromecast devices. Just run the app, and choose an option from the menu bar.
 
+## Todos
+
+* Stop casting if deselect option
+* Implement switching
+
 ## Install
 
 Before installing iCast, you need to install
