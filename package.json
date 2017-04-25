@@ -1,6 +1,6 @@
 {
   "name": "iCast",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cast your Mac using Chromecast",
   "main": "app.js",
   "scripts": {

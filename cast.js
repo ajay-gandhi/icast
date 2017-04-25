@@ -13,6 +13,7 @@ let cc_process,
     original_output,
     original_input,
     original_volume,
+    original_muted,
     casting = false;
 
 /**
@@ -25,18 +26,29 @@ module.exports.list = () =>
  * Begins streaming on the given device
  */
 module.exports.start = (which) => {
-  if (casting) return;
+  if (casting) return false;
   casting = true;
 
   // Save originals
   original_output = exec(AD_CMD + ' output').toString().trim();
   original_input  = exec(AD_CMD + ' input').toString().trim();
-  original_volume = exec('osascript -e "output volume of (get volume settings)"').toString().trim();
+  let settings = exec('osascript -e "get volume settings"')
+    .toString()
+    .trim()
+    .split(', ')
+    .reduce((obj, s) => {
+      s = s.split(':');
+      obj[s[0]] = s[1];
+      return obj;
+    }, {});
+  original_volume = settings['output volume'];
+  original_muted = (settings['output muted'] === 'true') ? 'with' : 'without';
 
   // Set new properties
   exec(AD_CMD + ' output "Soundflower (2ch)"');
   exec(AD_CMD + ' input "Soundflower (2ch)"');
   exec('osascript -e "set volume output volume 100 --100%"');
+  exec('osascript -e "set volume without output muted"');
 
   // Enable chromecast streaming
   cc_process = spawn('/usr/local/bin/node', [CC_PATH, '-d', which]);
@@ -46,7 +58,7 @@ module.exports.start = (which) => {
  * Stops streaming
  */
 module.exports.stop = () => {
-  if (!casting) return;
+  if (!casting) return false;
   casting = false;
 
   // Reset audio properties
@@ -61,6 +73,7 @@ module.exports.stop = () => {
     exec(AD_CMD + ' input "Internal Speakers"');
   }
   exec('osascript -e "set volume output volume ' + original_volume + ' --100%"');
+  exec('osascript -e "set volume ' + original_muted + ' output muted"');
 
   // Kill chromecast streaming process
   cc_process.kill();

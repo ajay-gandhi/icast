@@ -83,13 +83,18 @@ let choose_device = (item) => {
  * Stops casting
  */
 let stop_casting = () => {
-  if (!caster.stop()) return;
+  if (casting_device) {
+    caster.stop();
+  } else {
+    return;
+  }
 
   casting_device = false;
 
   // Uncheck all
-  menu.items.forEach(item => {
+  menu.items = menu.items.map(item => {
     if (item.isTemp) item.checked = false;
+    return item;
   });
 
   // Hide stop option
